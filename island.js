@@ -640,57 +640,5 @@ setInterval(ctlSync, 500);
 
 sync(); requestAnimationFrame(frame);
 
-/* ---------- Los detalles: tarjetas con un Minimo vivo cada una ---------- */
-(() => {
-  const grid = document.getElementById('anims'); if (!grid) return;
-  const L = [
-    ['wink', 'Guiño', 'Cierra un ojo y se inclina. Su reacción favorita.'],
-    ['giggle', 'Risita', 'Se encoge y se sacude de alegría.'],
-    ['hop', 'Salto', 'Un saltito con aplaste y estirón.'],
-    ['doubleHop', 'Doble salto', 'Dos saltos seguidos, el segundo más alto.'],
-    ['happyBounce', 'Rebote feliz', 'Rebota con los ojos sonrientes.'],
-    ['curious', 'Curioso', 'Inclina la cabeza para mirar de reojo.'],
-    ['lookAround', 'Mirar alrededor', 'Mira a un lado y al otro.'],
-    ['surprise', 'Sorpresa', 'Abre grandes los ojos y da un respingo.'],
-    ['dizzy', 'Mareo', 'Da una vuelta con los ojos y se tambalea.'],
-    ['yawn', 'Bostezo', 'Entrecierra los ojos y se estira.'],
-    ['greet', 'Saludo', 'Te recibe cuando abrís la isla.'],
-    ['startled', 'Susto', 'Se sobresalta si movés el mouse muy rápido.'],
-    ['#pet', 'Mimos', 'Tocalo varias veces seguidas y suelta corazones.'],
-    ['#squint', 'Al escribir', 'Entrecierra los ojos mientras buscás.'],
-    ['#sleep', 'Dormido', 'Se duerme cuando no usás la PC.'],
-    ['#dance', 'Baile', 'Se mueve al ritmo cuando suena música.'],
-    ['#look', 'Te sigue', 'Parpadea y sigue el cursor con la mirada.'],
-  ];
-  grid.innerHTML = L.map(([k, t, d]) => `<li class="an" data-k="${k}"><div class="an-stage"><div class="an-chr"></div>${k === '#sleep' ? zzzHTML() : ''}${k === '#squint' ? '<div class="an-field"><span class="an-txt"></span><i></i></div>' : ''}</div><h3>${t}</h3><p>${d}</p></li>`).join('');
-  function zzzHTML() { return '<div class="mo-zzz on an-z">' + [0, 1, 2].map(i => `<span style="font-size:${9 + i * 1.5}px;animation-delay:${i * 900}ms"><em style="animation-delay:${i * 900}ms"><u style="animation-delay:${i * 900}ms">z</u></em></span>`).join('') + '</div>' }
-  const word = 'notas';
-  const cards = [...grid.children].map(li => {
-    const k = li.dataset.k, st = li.querySelector('.an-stage');
-    const c = new Character(li.querySelector('.an-chr'), 64, { host: st, card: true });
-    if (k === '#sleep') c.forceSleep = true;
-    if (k === '#dance') c.forceDance = true;
-    const o = { li, k, c, t: null, busy: false };
-    o.play = () => {
-      if (!c.active) return;
-      if (k[0] !== '#') { c.rx.play(k); return }
-      if (k === '#pet') { c.pet(); setTimeout(() => c.pet(), 380); setTimeout(() => c.pet(), 760); return }
-      if (k === '#squint') { const tx = li.querySelector('.an-txt'); let i = 0; clearInterval(o.ty);
-        o.ty = setInterval(() => { if (i <= word.length) { tx.textContent = word.slice(0, i++); c.onTyped() } else { clearInterval(o.ty); setTimeout(() => { tx.textContent = ''; c.onTypingStopped() }, 700) } }, 160); return }
-      if (k === '#look') { c.doBlink(Math.random() < .3); return }
-    };
-    li.addEventListener('mouseenter', () => o.play());
-    li.addEventListener('click', () => o.play());
-    return o;
-  });
-  // bus.typed() afecta a todos; en las tarjetas solo queremos el propio.
-  bus.typed = function () { chars.forEach(x => { if (!x.card) x.onTyped() }) };
-  const loop = o => { clearTimeout(o.t); o.t = setTimeout(() => { if (o.c.inView) { if (!o.c.rx.busy && !o.c.petting) o.play(); loop(o) } }, 2600 + Math.random() * 1400) };
-  const io = new IntersectionObserver(es => es.forEach(e => {
-    const o = cards.find(x => x.li === e.target); o.c.inView = e.isIntersecting; o.c.setActive(e.isIntersecting);
-    if (e.isIntersecting) { setTimeout(() => o.play(), 300 + Math.random() * 500); loop(o) } else clearTimeout(o.t);
-  }), { threshold: .35 });
-  cards.forEach(o => io.observe(o.li));
-})();
 root.__mo = { S, I, C, chars, collapse, expand, openPanel, notify };
 })();
