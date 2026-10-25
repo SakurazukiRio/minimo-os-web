@@ -358,13 +358,13 @@ pill.innerHTML = `
   <div class="mo-ph"><div class="mo-s-chr"></div></div>
   <div class="mo-tt">Internet</div>
   <div class="mo-card"><div class="mo-r2">${icon('ethernet', 'dark', 18)}<span class="l">Ethernet</span><span class="v">Conectado</span></div></div>
-  <div class="mo-tt p">Recursos</div>
+  <div class="mo-rings"><div class="mo-ring"><svg viewBox="0 0 64 64"><circle class="t" cx="32" cy="32" r="28"/><circle class="f mo-cpub" cx="32" cy="32" r="28" pathLength="100"/></svg><span class="n mo-cpun"></span><span class="rl">CPU</span><span class="rv mo-cpu"></span></div><div class="mo-ring"><svg viewBox="0 0 64 64"><circle class="t" cx="32" cy="32" r="28"/><circle class="f mo-memb" cx="32" cy="32" r="28" pathLength="100"/></svg><span class="n mo-memn"></span><span class="rl">Memoria</span><span class="rv mo-mem"></span></div></div>
   <div class="mo-card">
-    <div class="mo-r2">${icon('chip', 'dark', 18)}<span class="l">CPU</span><span class="v mo-cpu"></span></div><div class="mo-bar"><div><i class="mo-cpub"></i></div></div>
-    <div class="mo-r2">${icon('apps', 'dark', 18)}<span class="l">Memoria</span><span class="v mo-mem"></span></div><div class="mo-bar"><div><i class="mo-memb"></i></div></div>
     <div class="mo-r2">${icon('folder', 'dark', 18)}<span class="l">Disco</span><span class="v">13% · 188,8 GB libres</span></div><div class="mo-bar"><div><i style="width:13%"></i></div></div>
     <div class="mo-r2">${icon('display', 'dark', 18)}<span class="l">Gráficos</span><span class="v mo-gpu"></span></div>
   </div>
+  <div class="mo-seg" role="radiogroup" aria-label="Modo de energía"><button role="radio" aria-checked="false">Ahorro</button><button role="radio" aria-checked="true" class="on">Equilibrado</button><button role="radio" aria-checked="false">Rendimiento</button></div>
+  <button class="mo-free" type="button">Liberar memoria</button>
   <div class="mo-tt p">Dispositivos</div>
   <div class="mo-card">
     <div class="mo-r2">${icon('keyboard', 'dark', 18)}<span class="l">Teclado</span><span class="v">Teclado inalámbrico</span></div>
@@ -568,8 +568,9 @@ const els = { time: $('.mo-time'), rec: $('.mo-rec'), el: $('.mo-el'), notice: $
   time2: $('.mo-time2'), date: $('.mo-date'), media: $('.mo-rv-media'), tit: $('.mo-tit'), art2: $('.mo-art2'), mbar: $('.mo-mbar div'), mbarW: $('.mo-mbar'),
   cv: $('.mo-art .cv'), play: $('.mo-ctrls [data-m=play] img'), cpu: $('.mo-cpu'), cpub: $('.mo-cpub'), mem: $('.mo-mem'), memb: $('.mo-memb'), gpu: $('.mo-gpu') };
 let res_ = { cpu: 5, temp: 30, mem: 1.6, gpu: 6, gt: 35 };
-function drawStatus() { els.cpu.textContent = res_.cpu + '% · ' + res_.temp + ' °C'; els.cpub.style.width = res_.cpu + '%'; els.cpub.classList.toggle('hot', res_.cpu > 90);
-  els.mem.textContent = res_.mem.toFixed(1).replace('.', ',') + ' / 31,2 GB'; els.memb.style.width = (res_.mem / 31.2 * 100) + '%'; els.gpu.textContent = res_.gpu + '% · ' + res_.gt + ' °C' }
+function drawStatus() { const mp = Math.round(res_.mem / 31.2 * 100);
+  els.cpu.textContent = res_.temp + ' °C'; $('.mo-cpun').textContent = res_.cpu + '%'; els.cpub.style.strokeDashoffset = 100 - res_.cpu; els.cpub.classList.toggle('hot', res_.cpu > 90);
+  els.mem.textContent = res_.mem.toFixed(1).replace('.', ',') + ' / 31,2 GB'; $('.mo-memn').textContent = mp + '%'; els.memb.style.strokeDashoffset = 100 - mp; els.gpu.textContent = res_.gpu + '% · ' + res_.gt + ' °C' }
 setInterval(() => { if (!(I.panel && I.kind === 'status')) return; res_.cpu = Math.max(2, Math.min(40, res_.cpu + Math.round((Math.random() - .5) * 8))); res_.temp = 29 + Math.round(res_.cpu / 8);
   res_.mem = Math.max(1.5, Math.min(2.9, res_.mem + (Math.random() - .5) * .2)); res_.gpu = Math.max(1, Math.min(30, res_.gpu + Math.round((Math.random() - .5) * 6))); drawStatus() }, 2000);
 drawStatus();

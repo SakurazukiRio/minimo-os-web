@@ -137,3 +137,18 @@
 .mo-empty{height:44px;line-height:44px;text-align:center;font-size:13px;color:var(--ts)}
 @media (max-width:640px){.mo-stage{height:540px;border-radius:10px}}
 @media (max-width:460px){.mo-stage{zoom:.84}}
+
+.mo-rings{display:flex;gap:10px}
+.mo-ring{flex:1;position:relative;height:118px;border-radius:18px;background:var(--field);display:flex;flex-direction:column;align-items:center;padding-top:12px}
+.mo-ring svg{width:64px;height:64px;transform:rotate(-90deg)}
+.mo-ring circle{fill:none;stroke-width:4;stroke-linecap:round}
+.mo-ring .t{stroke:var(--track)}
+.mo-ring .f{stroke:var(--fill);stroke-dasharray:100;stroke-dashoffset:100;transition:stroke-dashoffset .6s cubic-bezier(.33,1,.68,1)}
+.mo-ring .f.hot{stroke:var(--danger)}
+.mo-ring .n{position:absolute;top:33px;font-size:15px;font-weight:500;font-variant-numeric:tabular-nums}
+.mo-ring .rl{font-size:12px;font-weight:600;margin-top:6px}
+.mo-ring .rv{font-size:11px;color:var(--ts);font-variant-numeric:tabular-nums}
+.mo-seg{display:flex;padding:3px;border-radius:14px;background:var(--track)}
+.mo-seg button{flex:1;border:0;background:none;font:inherit;font-size:12px;height:28px;border-radius:11px;color:var(--ts);cursor:pointer}
+.mo-seg button.on{background:var(--fill);color:var(--onAccent)}
+.mo-free{border:0;font:inherit;font-size:13px;font-weight:600;height:36px;border-radius:14px;background:var(--track);color:inherit;cursor:pointer}
