@@ -23,6 +23,8 @@
 <meta name="twitter:title" content="Minimo OS">
 <meta name="twitter:description" content="Una isla flotante. Un personaje feliz. Para Arch Linux y CachyOS.">
 <meta name="twitter:image" content="https://diegolede.github.io/minimo-os-web/assets/og.png">
+<link rel="preload" href="assets/fonts/AdwaitaSans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/wallpaper-800.webp" as="image" type="image/webp">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="island.css">
 </head>
@@ -45,7 +47,7 @@
 
 <main id="contenido">
 <header class="hero" id="top">
-  <div class="char-wrap rv" id="charWrap" title="Hacé clic varias veces para mimarlo">
+  <div class="char-wrap" id="charWrap" title="Hacé clic varias veces para mimarlo">
     <svg id="minimoHero" viewBox="0 0 512 512" role="img" aria-label="Minimo, el personaje de Minimo OS">
       <defs><clipPath id="sphere"><circle cx="256" cy="256" r="240"/></clipPath></defs>
       <g id="bodyHero"><circle cx="256" cy="256" r="240" fill="#0B0B0C"/>
@@ -226,8 +228,12 @@
 <footer class="footer">
   <div class="footer-row">
     <a class="brand foot-brand" href="#top"><svg viewBox="0 0 512 512" aria-hidden="true"><circle cx="256" cy="256" r="240" fill="#0B0B0C"/><rect x="152.6" y="156" width="88" height="199" rx="44" fill="#fff"/><rect x="271.4" y="156" width="88" height="199" rx="44" fill="#fff"/></svg>Minimo OS</a>
-    <p>Creado por TRN1 (Diego Ledesma) · Licencia MIT</p>
-    <p><a href="https://github.com/Diegolede/minimo-os">GitHub</a> · <a href="https://github.com/Diegolede/minimo-os/releases">Releases</a> · 1.2.3 beta</p>
+    <p class="foot-meta">Creado por TRN1 (Diego Ledesma) · Licencia MIT</p>
+    <nav class="foot-links" aria-label="Enlaces del pie">
+      <a href="https://github.com/Diegolede/minimo-os">GitHub</a>
+      <a href="https://github.com/Diegolede/minimo-os/releases">Releases</a>
+      <a href="#novedades">1.2.3 beta</a>
+    </nav>
   </div>
 </footer>
 <script src="main.js"></script>

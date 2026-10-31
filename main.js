@@ -194,6 +194,8 @@ function makeFace(ids){
 }
 
 const hero=makeFace({svg:'minimoHero',body:'bodyHero',eyeL:'eyeLHero',eyeR:'eyeRHero',wrap:'charWrap',hearts:'hearts',zzz:'zzz',interactive:true});
+/* Entrada del hero */
+requestAnimationFrame(()=>{const w=document.getElementById('charWrap'); if(w){ if(reduce) w.classList.add('in'); else requestAnimationFrame(()=>w.classList.add('in')) }});
 const face2=makeFace({svg:'minimo2',body:'body2',eyeL:'eyeL2',eyeR:'eyeR2',wrap:'minimoCard',interactive:false});
 
 const poseCtl=document.querySelector('.pose-ctl');
@@ -214,14 +216,14 @@ btn.addEventListener('click',async()=>{
   }
   const st=document.getElementById('copyStatus');
   btn.classList.add('done'); st.textContent='Comando copiado';
-  clearTimeout(btn._t); btn._t=setTimeout(()=>{btn.classList.remove('done'); st.textContent=''},1800);
+  clearTimeout(btn._t); btn._t=setTimeout(()=>{btn.classList.remove('done'); st.textContent=''},2200);
 });
 
 /* Reveal + nav */
 const rv=document.querySelectorAll('.rv');
 if(reduce||!('IntersectionObserver' in window)) rv.forEach(e=>e.classList.add('in'));
 else{
-  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in'); io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in'); io.unobserve(e.target)}}),{rootMargin:'0px 0px -6% 0px',threshold:0.08});
   rv.forEach(e=>io.observe(e));
 }
 const nav=document.querySelector('.nav');

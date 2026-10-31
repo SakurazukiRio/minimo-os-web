@@ -2,17 +2,17 @@
 @font-face{font-family:"Adwaita Sans";src:url(assets/fonts/AdwaitaSans.woff2) format("woff2");font-weight:100 900;font-display:swap}
 .mo{--card:#FFFFFF;--field:#F2F2F7;--raised:#FFFFFF;--subtle:#F7F7FA;--hover:#E9E9EE;--track:#E5E5EA;--dot:#8E8E93;--wall:#E9E9EC;
  --tp:#0A0A0B;--tp-rgb:10,10,11;--ts:#636366;--fill:#0A0A0B;--onAccent:#FFFFFF;--danger:#D70015;--rec:#FF3B30;--sphere:#0B0B0C;--eye:#FFFFFF;--shadow:rgba(0,0,0,.16);
- font-family:"Adwaita Sans","Inter",system-ui,sans-serif;color:var(--tp);-webkit-font-smoothing:antialiased;margin:40px auto 0;max-width:1100px}
+ font-family:"Adwaita Sans","Inter",system-ui,sans-serif;color:var(--tp);-webkit-font-smoothing:antialiased;margin:0 auto;max-width:1100px}
 .mo.dark{--card:#1C1C1E;--field:#2C2C2E;--raised:#3A3A3C;--subtle:#242426;--hover:#3A3A3C;--track:#3A3A3C;--dot:#8E8E93;--wall:#121214;
  --tp:#F5F5F7;--tp-rgb:245,245,247;--ts:#AEAEB2;--fill:#F5F5F7;--onAccent:#0A0A0B;--danger:#FF6961;--rec:#FF453A;--sphere:#F5F5F7;--eye:#0B0B0C;--shadow:rgba(0,0,0,.45)}
 .mo *{box-sizing:border-box}
 .mo-stage{position:relative;height:640px;border-radius:14px;overflow:hidden;background:var(--wall);transition:background-color .25s;user-select:none;-webkit-user-select:none;touch-action:pan-y}
-.mo-wall{position:absolute;inset:0;background:var(--wall) url(assets/wallpaper.jpg) center/cover no-repeat;background-image:image-set(url(assets/wallpaper.webp) type("image/webp"),url(assets/wallpaper.jpg) type("image/jpeg"));transition:filter .2s}
+.mo-wall{position:absolute;inset:0;background:var(--wall) center/cover no-repeat;background-image:image-set(url(assets/wallpaper-800.webp) type("image/webp") 1x,url(assets/wallpaper-1280.webp) type("image/webp") 2x,url(assets/wallpaper.jpg) type("image/jpeg"));transition:filter .25s ease}
 .mo-pill{position:absolute;left:0;top:8px;background:var(--card);overflow:hidden;cursor:pointer;transition:background-color .25s;
  box-shadow:0 8px 32px var(--shadow);will-change:transform,width,height;-webkit-tap-highlight-color:transparent}
 .mo-pill.exp{cursor:default}
-.mo-view{position:absolute;left:50%;top:0;transition:opacity .16s linear}
-.mo-view.off{opacity:0;pointer-events:none;visibility:hidden;transition:opacity .16s linear,visibility 0s .16s}
+.mo-view{position:absolute;left:50%;top:0;transition:opacity .2s cubic-bezier(.33,1,.68,1)}
+.mo-view.off{opacity:0;pointer-events:none;visibility:hidden;transition:opacity .2s cubic-bezier(.33,1,.68,1),visibility 0s .2s}
 .mo-compact{top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:10px;height:36px;white-space:nowrap}
 .mo-time{font-size:15px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1}
 .mo-rec{display:flex;align-items:center;gap:6px;font-size:13px;font-variant-numeric:tabular-nums}
@@ -135,8 +135,10 @@
 .mo-tray div:hover::before{background:var(--hover)}
 .mo-tray div{z-index:0}
 .mo-empty{height:44px;line-height:44px;text-align:center;font-size:13px;color:var(--ts)}
-@media (max-width:640px){.mo-stage{height:540px;border-radius:10px}}
-@media (max-width:460px){.mo-stage{zoom:.84}}
+@media (max-width:640px){.mo-stage{height:520px;border-radius:12px}}
+@media (max-width:460px){.mo-stage{height:460px;zoom:.82}}
+@media (max-width:390px){.mo-stage{height:420px;zoom:.78}}
+@media (prefers-reduced-motion:reduce){.mo-view,.mo-page,.mo-rv,.mo-pill,.mo-free,.mo-seg button{transition:none!important}}
 
 .mo-rings{display:flex;gap:10px}
 .mo-ring{flex:1;position:relative;height:118px;border-radius:18px;background:var(--field);display:flex;flex-direction:column;align-items:center;padding-top:12px}
@@ -154,7 +156,8 @@
 .mo-pp{display:flex;align-items:center;justify-content:center;gap:8px;min-height:16px;margin-top:2px}
 .mo-pp-desc{font-size:11px;color:var(--ts);text-align:center}
 .mo-undo{border:0;background:none;font:inherit;font-size:11px;font-weight:700;color:var(--tp);cursor:pointer;text-decoration:underline;padding:0}
-.mo-free{border:0;font:inherit;font-size:13px;font-weight:600;height:44px;border-radius:22px;background:var(--track);color:inherit;cursor:pointer;transition:background-color .2s,color .2s,transform .12s;width:100%}
+.mo-free{border:0;font:inherit;font-size:13px;font-weight:600;height:44px;border-radius:22px;background:var(--track);color:inherit;cursor:pointer;transition:background-color .2s,color .2s,transform .12s,opacity .2s;width:100%}
+.mo-free:hover{opacity:.92}
 .mo-free:active{transform:scale(.97)}
 .mo-free.armed,.mo-free.busy{background:var(--fill);color:var(--onAccent)}
 .mo-free.done{background:var(--fill);color:var(--onAccent)}
