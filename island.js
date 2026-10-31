@@ -804,4 +804,41 @@ setInterval(ctlSync, 500);
 sync(); requestAnimationFrame(frame);
 
 root.__mo = { S, I, C, chars, collapse, expand, openPanel, notify };
+
+/* ---------- Escala uniforme al viewport (sin cambiar el diseño) ---------- */
+(function fitDemoScale() {
+  const host = document.getElementById('moScaleHost');
+  const scaler = document.getElementById('moScale');
+  if (!host || !scaler) return;
+  const PAD = 14;
+  /* 800px: cabe el panel Recursos (~771) + margen superior de la píldora. El menú mide ~596. */
+  const DESIGN_H = 800;
+  const MIN_W = 420;
+  const MAX_W = 1040;
+  let raf = 0;
+  function apply() {
+    raf = 0;
+    const availW = host.clientWidth;
+    if (availW <= 0) return;
+    const stageW = Math.min(MAX_W, Math.max(MIN_W, availW - PAD * 2));
+    stage.style.width = stageW + 'px';
+    stage.style.height = DESIGN_H + 'px';
+    const screenW = stageW + PAD * 2;
+    const screenH = DESIGN_H + PAD * 2;
+    /* Solo ancho: la página puede scrollear; el recorte era dentro del stage. */
+    let scale = Math.min(1, availW / screenW);
+    if (scale > 0.995) scale = 1;
+    scaler.style.width = screenW + 'px';
+    scaler.style.transform = 'scale(' + scale + ')';
+    scaler.style.left = Math.max(0, (availW - screenW * scale) / 2) + 'px';
+    host.style.height = (screenH * scale) + 'px';
+    host.dataset.scale = String(scale);
+  }
+  const schedule = () => { if (!raf) raf = requestAnimationFrame(apply) };
+  apply();
+  addEventListener('resize', schedule, { passive: true });
+  addEventListener('orientationchange', () => setTimeout(schedule, 80), { passive: true });
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(schedule).observe(host);
+  root.__mo.fitScale = apply;
+})();
 })();
