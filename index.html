@@ -4,77 +4,231 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Minimo OS — Una isla flotante. Un personaje feliz.</title>
-<meta name="description" content="Minimo OS es una configuración minimalista de Hyprland para Arch Linux y derivadas como CachyOS: una isla dinámica flotante y un personaje feliz. Creado por TRN1 (Diego Ledesma).">
+<meta name="description" content="Minimo OS 1.2.3 beta: escritorio minimalista de Hyprland para Arch Linux y CachyOS. Isla dinámica, Minimo con animaciones v12, instalador robusto y actualización desde Ajustes.">
 <meta name="theme-color" content="#FFFFFF">
+<meta name="keywords" content="Minimo OS, Hyprland, Arch Linux, CachyOS, isla dinámica, Quickshell, desktop">
+<link rel="canonical" href="https://diegolede.github.io/minimo-os-web/">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/icon.png">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Minimo OS">
-<meta property="og:description" content="Una isla flotante. Un personaje feliz. Configuración minimalista de Hyprland para Arch Linux.">
+<meta property="og:site_name" content="Minimo OS">
+<meta property="og:locale" content="es_AR">
+<meta property="og:title" content="Minimo OS — Una isla flotante. Un personaje feliz.">
+<meta property="og:description" content="Escritorio minimalista de Hyprland para Arch Linux y CachyOS. Isla dinámica, Minimo v12, instalador robusto y actualización desde Ajustes.">
 <meta property="og:url" content="https://diegolede.github.io/minimo-os-web/">
 <meta property="og:image" content="https://diegolede.github.io/minimo-os-web/assets/og.png">
-<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Minimo OS">
+<meta name="twitter:description" content="Una isla flotante. Un personaje feliz. Para Arch Linux y CachyOS.">
+<meta name="twitter:image" content="https://diegolede.github.io/minimo-os-web/assets/og.png">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="island.css">
 </head>
 <body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
 <nav class="nav" aria-label="Principal">
-  <a class="brand" href="#top"><svg viewBox="0 0 512 512" aria-hidden="true"><circle cx="256" cy="256" r="240" fill="#0B0B0C"/><rect x="164.6" y="175" width="71.5" height="162" rx="35.75" fill="#fff"/><rect x="275.9" y="175" width="71.5" height="162" rx="35.75" fill="#fff"/></svg>Minimo OS</a>
-  <div class="links"><a href="#pruebalo">Pruébalo en la web</a><a href="#funciones">Funciones</a><a href="#instalar">Instalar</a></div>
-  <a class="btn btn-dark btn-sm" href="#instalar">Instalar</a>
+  <a class="brand" href="#top"><svg viewBox="0 0 512 512" aria-hidden="true"><circle cx="256" cy="256" r="240" fill="#0B0B0C"/><rect x="152.6" y="156" width="88" height="199" rx="44" fill="#fff"/><rect x="271.4" y="156" width="88" height="199" rx="44" fill="#fff"/></svg>Minimo OS</a>
+  <div class="links">
+    <a href="#pruebalo">Pruébalo en la web</a>
+    <a href="#novedades">Novedades</a>
+    <a href="#funciones">Funciones</a>
+    <a href="#instalar">Instalar</a>
+  </div>
+  <div class="nav-end">
+    <span class="ver" title="Versión actual">1.2.3 beta</span>
+    <a class="btn btn-ghost btn-sm" href="https://github.com/Diegolede/minimo-os" rel="noopener">GitHub</a>
+    <a class="btn btn-dark btn-sm" href="#instalar">Instalar</a>
+  </div>
 </nav>
 
+<main id="contenido">
 <header class="hero" id="top">
-  <div class="char-wrap rv" id="charWrap">
-    <svg id="minimo" viewBox="0 0 512 512" role="img" aria-label="Minimo, el personaje de Minimo OS">
+  <div class="char-wrap rv" id="charWrap" title="Hacé clic varias veces para mimarlo">
+    <svg id="minimoHero" viewBox="0 0 512 512" role="img" aria-label="Minimo, el personaje de Minimo OS">
       <defs><clipPath id="sphere"><circle cx="256" cy="256" r="240"/></clipPath></defs>
-      <g id="body"><circle cx="256" cy="256" r="240" fill="#0B0B0C"/>
-        <g clip-path="url(#sphere)"><rect id="eyeL" x="164.6" y="175" width="71.5" height="162" rx="35.75" fill="#fff"/><rect id="eyeR" x="275.9" y="175" width="71.5" height="162" rx="35.75" fill="#fff"/></g>
+      <g id="bodyHero"><circle cx="256" cy="256" r="240" fill="#0B0B0C"/>
+        <g clip-path="url(#sphere)">
+          <path id="eyeLHero" fill="#fff"/>
+          <path id="eyeRHero" fill="#fff"/>
+        </g>
       </g>
     </svg>
     <div id="hearts" aria-hidden="true"></div>
+    <div id="zzz" class="hero-zzz" aria-hidden="true"><span>z</span><span>z</span><span>z</span></div>
   </div>
-  <p class="eyebrow rv">Minimo OS 1.2.1 beta para Hyprland</p>
+  <p class="eyebrow rv"><span class="pill-ver">1.2.3 beta</span> para Hyprland</p>
   <h1 class="rv">Una isla flotante.<br>Un personaje feliz.</h1>
-  <p class="sub rv">Un escritorio minimalista para Arch Linux y derivadas como CachyOS, pensado alrededor de una isla dinámica y de Minimo.</p>
-  <div class="cta rv"><a class="btn btn-dark" href="#instalar">Instalar</a><a class="btn btn-light" href="#pruebalo">Pruébalo en la web</a></div>
+  <p class="sub rv">Escritorio minimalista para Arch Linux y CachyOS: todo pasa por una isla dinámica y por Minimo, que ahora mira, guiña y se duerme con animaciones más suaves.</p>
+  <div class="cta rv">
+    <a class="btn btn-dark" href="#instalar">Instalar</a>
+    <a class="btn btn-light" href="#pruebalo">Pruébalo en la web</a>
+    <a class="btn btn-ghost" href="https://github.com/Diegolede/minimo-os" rel="noopener">Ver en GitHub</a>
+  </div>
+  <ul class="compat rv" aria-label="Sistemas compatibles">
+    <li><span class="dot" aria-hidden="true"></span>Arch Linux</li>
+    <li><span class="dot" aria-hidden="true"></span>CachyOS</li>
+    <li><span class="dot" aria-hidden="true"></span>Hyprland 0.56+</li>
+  </ul>
 </header>
 
 <section id="pruebalo" class="section demo-sec">
-  <div class="head rv"><h2>Pruébalo en la web.</h2><p class="sub">La isla real, en tu navegador. Hacé clic o deslizala.</p></div>
-  <div class="rv">
-  <div class="mo" id="mo" tabindex="-1">
-  <div class="mo-screen"><div class="mo-stage"><div class="mo-wall"></div><div class="mo-pill" role="group" aria-label="Isla dinámica de Minimo OS (demo interactiva)"></div></div></div>
-  <div class="mo-ctl" role="toolbar" aria-label="Probar estados de la isla">
-    <button data-a="menu">Menú</button><button data-a="status">Recursos</button><button data-a="apps">En segundo plano</button>
-    <button data-a="music">Música</button><button data-a="notif">Notificación</button><button data-a="rec">Grabar</button>
-    <button data-a="sleep">Dormir</button><button data-a="pet">Mimar</button><button data-a="dark">Modo oscuro</button>
+  <div class="head rv">
+    <p class="kicker">Demo interactiva</p>
+    <h2>Pruébalo en la web.</h2>
+    <p class="sub">La isla real, en tu navegador. Abrí el menú, deslizá a Recursos, liberá memoria o cambiá el modo de energía.</p>
   </div>
-  
+  <div class="rv">
+    <div class="mo" id="mo" tabindex="-1">
+      <div class="mo-screen">
+        <div class="mo-stage">
+          <div class="mo-wall"></div>
+          <div class="mo-pill" role="group" aria-label="Isla dinámica de Minimo OS (demo interactiva)"></div>
+        </div>
+      </div>
+      <div class="mo-ctl" role="toolbar" aria-label="Probar estados de la isla">
+        <button type="button" data-a="menu">Menú</button>
+        <button type="button" data-a="status">Recursos</button>
+        <button type="button" data-a="apps">En segundo plano</button>
+        <button type="button" data-a="music">Música</button>
+        <button type="button" data-a="notif">Notificación</button>
+        <button type="button" data-a="rec">Grabar</button>
+        <button type="button" data-a="sleep">Dormir</button>
+        <button type="button" data-a="pet">Mimar</button>
+        <button type="button" data-a="dark">Modo oscuro</button>
+      </div>
+    </div>
   </div>
 </section>
 
+<section id="novedades" class="section news">
+  <div class="head rv">
+    <p class="kicker">1.2.3 beta</p>
+    <h2>Lo nuevo.</h2>
+    <p class="sub">Instalador más robusto, actualizar desde Ajustes y cincuenta mejoras de UX en toda la interfaz.</p>
+  </div>
+  <div class="news-grid">
+    <article class="news-card rv featured">
+      <img src="assets/icons/dark/update.svg" alt="" width="28" height="28">
+      <h3>Actualizar desde Ajustes</h3>
+      <p>Ves la versión nueva y sus novedades, una barra de progreso y podés reiniciar la interfaz sin cerrar sesión.</p>
+    </article>
+    <article class="news-card rv">
+      <img src="assets/icons/dark/terminal.svg" alt="" width="28" height="28">
+      <h3>Instalador robusto</h3>
+      <p>Reintentos, espejo de respaldo, instalación paquete por paquete y convive con KDE Plasma y SDDM.</p>
+    </article>
+    <article class="news-card rv">
+      <img src="assets/icons/dark/display.svg" alt="" width="28" height="28">
+      <h3>Monitor off</h3>
+      <p>Apagá la pantalla por software. Hyprland sigue viendo el monitor: juegos y apps no se cierran.</p>
+    </article>
+    <article class="news-card rv">
+      <img src="assets/icons/dark/eye.svg" alt="" width="28" height="28">
+      <h3>Minimo v12</h3>
+      <p>Ojos más grandes sobre la esfera, sonrisa en arco, guiños frecuentes y Zzz al dormir. Sin boca.</p>
+    </article>
+    <article class="news-card rv">
+      <img src="assets/icons/dark/chip.svg" alt="" width="28" height="28">
+      <h3>Recursos minimalistas</h3>
+      <p>Anillos de CPU y memoria, detalles al pasar el mouse, Liberar memoria con confirmación y Deshacer en energía.</p>
+    </article>
+    <article class="news-card rv">
+      <img src="assets/icons/dark/gesture.svg" alt="" width="28" height="28">
+      <h3>50 mejoras de UX</h3>
+      <p>Pantalla de inicio, gestos, Super+/, reducir animaciones, más contraste y atajos más claros.</p>
+    </article>
+  </div>
+</section>
 
 <section id="funciones" class="section">
-  <div class="head rv"><h2>Todo, en un solo lugar.</h2></div>
-  <ul class="features"><li class="rv"><img src="assets/icons/dark/search.svg" alt="" width="24" height="24"><h3>Buscador</h3><p>Abrí cualquier app desde la isla o con Super+B.</p></li><li class="rv"><img src="assets/icons/dark/music.svg" alt="" width="24" height="24"><h3>Música</h3><p>Portada, progreso y controles, siempre a mano.</p></li><li class="rv"><img src="assets/icons/dark/chip.svg" alt="" width="24" height="24"><h3>Recursos de un vistazo</h3><p>Anillos de CPU y memoria. Los detalles aparecen solo al pasar el mouse.</p></li><li class="rv"><img src="assets/icons/dark/record.svg" alt="" width="24" height="24"><h3>Captura y grabación</h3><p>Un toque para capturar un área o grabar la pantalla.</p></li><li class="rv"><img src="assets/icons/dark/desktops.svg" alt="" width="24" height="24"><h3>Escritorios</h3><p>Cambiá y ordená escritorios desde el menú.</p></li><li class="rv"><img src="assets/icons/dark/sun.svg" alt="" width="24" height="24"><h3>Claro u oscuro</h3><p>Brillo, saturación y modo oscuro en el mismo lugar.</p></li><li class="rv"><img src="assets/icons/dark/brush.svg" alt="" width="24" height="24"><h3>Minimo, una esfera</h3><p>Sus ojos se curvan con la forma del personaje en cada gesto y cada mirada.</p></li><li class="rv"><img src="assets/icons/dark/drop.svg" alt="" width="24" height="24"><h3>Liberar memoria</h3><p>Muestra qué ventanas va a cerrar, pide confirmación y cuánto liberó.</p></li><li class="rv"><img src="assets/icons/dark/power.svg" alt="" width="24" height="24"><h3>Pensado para laptops</h3><p>Batería, cargador, brillo, tapa y modos de energía Ahorro, Equilibrado y Rendimiento.</p></li><li class="rv"><img src="assets/icons/dark/desktops.svg" alt="" width="24" height="24"><h3>Escritorios ordenados</h3><p>Se reacomodan solos cuando uno queda vacío.</p></li><li class="rv"><img src="assets/icons/dark/restart.svg" alt="" width="24" height="24"><h3>Siempre responde</h3><p>Super+Shift+Escape reinicia la interfaz si se tilda, sin cerrar apps.</p></li></ul>
+  <div class="head rv">
+    <p class="kicker">Funciones</p>
+    <h2>Todo, en un solo lugar.</h2>
+  </div>
+  <ul class="features">
+    <li class="rv"><img src="assets/icons/dark/search.svg" alt="" width="24" height="24"><h3>Buscador</h3><p>Abrí cualquier app desde la isla o con Super+B.</p></li>
+    <li class="rv"><img src="assets/icons/dark/music.svg" alt="" width="24" height="24"><h3>Música</h3><p>Portada, progreso y controles, siempre a mano.</p></li>
+    <li class="rv"><img src="assets/icons/dark/chip.svg" alt="" width="24" height="24"><h3>Recursos</h3><p>Anillos de CPU y memoria. Los detalles aparecen solo al pasar el mouse.</p></li>
+    <li class="rv"><img src="assets/icons/dark/record.svg" alt="" width="24" height="24"><h3>Captura y grabación</h3><p>Un toque para capturar un área o grabar la pantalla.</p></li>
+    <li class="rv"><img src="assets/icons/dark/display.svg" alt="" width="24" height="24"><h3>Monitor off</h3><p>Apagá el monitor sin desconectarlo. Ideal para dejar un juego andando.</p></li>
+    <li class="rv"><img src="assets/icons/dark/sun.svg" alt="" width="24" height="24"><h3>Claro u oscuro</h3><p>Brillo, saturación y modo oscuro en el mismo lugar.</p></li>
+    <li class="rv"><img src="assets/icons/dark/brush.svg" alt="" width="24" height="24"><h3>Minimo v12</h3><p>Ojos esféricos más grandes, sonrisa en arco y guiños. Nunca tiene boca.</p></li>
+    <li class="rv"><img src="assets/icons/dark/drop.svg" alt="" width="24" height="24"><h3>Liberar memoria</h3><p>Muestra qué ventanas va a cerrar, pide confirmación y cuánto liberó.</p></li>
+    <li class="rv"><img src="assets/icons/dark/battery.svg" alt="" width="24" height="24"><h3>Laptops</h3><p>Batería, cargador, tapa y modos Ahorro, Equilibrado y Rendimiento.</p></li>
+    <li class="rv"><img src="assets/icons/dark/update.svg" alt="" width="24" height="24"><h3>Actualizar en la app</h3><p>Desde Ajustes ves novedades, progreso y reiniciás la interfaz.</p></li>
+    <li class="rv"><img src="assets/icons/dark/keyboard.svg" alt="" width="24" height="24"><h3>Atajos claros</h3><p>Super+/ lista atajos. Super+N no molestar. Super+Shift+Escape rescata la UI.</p></li>
+    <li class="rv"><img src="assets/icons/dark/eye.svg" alt="" width="24" height="24"><h3>Accesibilidad</h3><p>Reducir animaciones y más contraste, sin perder el diseño.</p></li>
+  </ul>
+</section>
+
+<section id="minimo" class="section minimo-sec">
+  <div class="minimo-split">
+    <div class="minimo-copy rv">
+      <p class="kicker">El personaje</p>
+      <h2>Minimo tiene vida propia.</h2>
+      <p class="sub left">Sigue el mouse, guiña un ojo, se entrecierra al escribir y se duerme con Zzz. Cuando está feliz, los ojos se curvan en un arco fino. Nunca tiene boca.</p>
+      <ul class="trait-list">
+        <li>Ojos ~23&nbsp;% más grandes, a ±20,5°</li>
+        <li>Sonrisa en arco (sin boca)</li>
+        <li>Guiño asimétrico frecuente</li>
+        <li>Zzz al dormir · entrecerrado al tipear</li>
+      </ul>
+    </div>
+    <div class="minimo-stage rv" aria-hidden="true">
+      <div class="minimo-card" id="minimoCard">
+        <svg id="minimo2" viewBox="0 0 512 512" role="presentation">
+          <defs><clipPath id="sphere2"><circle cx="256" cy="256" r="240"/></clipPath></defs>
+          <g id="body2"><circle cx="256" cy="256" r="240" fill="#0B0B0C"/>
+            <g clip-path="url(#sphere2)">
+              <path id="eyeL2" fill="#fff"/>
+              <path id="eyeR2" fill="#fff"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div class="pose-ctl" role="toolbar" aria-label="Probar poses de Minimo">
+        <button type="button" data-pose="idle" class="on">Reposo</button>
+        <button type="button" data-pose="happy">Feliz</button>
+        <button type="button" data-pose="wink">Guiño</button>
+        <button type="button" data-pose="sleep">Dormir</button>
+        <button type="button" data-pose="squint">Escribir</button>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section id="instalar" class="section install">
-  <div class="head rv"><h2>Instalalo en minutos.</h2><p class="sub">Tres pasos. Sin configurar nada a mano.</p></div>
+  <div class="head rv">
+    <p class="kicker">Instalación</p>
+    <h2>Instalalo en minutos.</h2>
+    <p class="sub">Tres pasos. El instalador reintenta, cambia de espejo si hace falta y convive con KDE Plasma.</p>
+  </div>
   <ol class="steps rv">
-    <li><span class="n">1</span><h3>Requisitos</h3><p>Arch Linux o una derivada como CachyOS, con Hyprland 0.56 o superior.</p></li>
-    <li><span class="n">2</span><h3>Ejecutá el instalador</h3><p>Pegá la línea en una terminal y respondé las preguntas.</p></li>
-    <li><span class="n">3</span><h3>Volvé a iniciar sesión</h3><p>Elegí Hyprland al entrar. La isla aparece arriba.</p></li>
+    <li><span class="n" aria-hidden="true">1</span><h3>Requisitos</h3><p>Arch Linux o CachyOS, con Hyprland 0.56 o superior.</p></li>
+    <li><span class="n" aria-hidden="true">2</span><h3>Ejecutá el instalador</h3><p>Pegá la línea en una terminal y respondé las preguntas.</p></li>
+    <li><span class="n" aria-hidden="true">3</span><h3>Volvé a iniciar sesión</h3><p>Elegí Hyprland al entrar. La isla aparece arriba.</p></li>
   </ol>
-  <button class="cmd rv" id="copy" type="button" aria-label="Copiar comando de instalación"><code id="cmd">curl -fsSL https://raw.githubusercontent.com/Diegolede/minimo-os/main/install.sh | bash</code><span class="cp" aria-hidden="true"><svg class="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><svg class="i-ok" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="lbl">Copiado</span></span></button>
-  <p class="fine rv">Compatible con Arch Linux y derivadas como CachyOS. Si ya usás otro gestor de sesión, como SDDM, agregá <code>-s -- --no-greeter</code> para conservarlo. El instalador respalda tu configuración en <code>~/.config/hypr.bak-&lt;fecha&gt;</code>. Para ver los pasos sin cambiar nada, agregá <code>-s -- --dry-run</code>. <a href="https://github.com/Diegolede/minimo-os">Código en GitHub</a></p>
+  <button class="cmd rv" id="copy" type="button" aria-label="Copiar comando de instalación">
+    <code id="cmd">curl -fsSL https://raw.githubusercontent.com/Diegolede/minimo-os/main/install.sh | bash</code>
+    <span class="cp" aria-hidden="true">
+      <svg class="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+      <svg class="i-ok" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+      <span class="lbl">Copiado</span>
+    </span>
+  </button>
+  <p class="fine rv">Compatible con <strong>Arch Linux</strong> y derivadas como <strong>CachyOS</strong>. Si ya usás otro gestor de sesión, como SDDM, agregá <code>-s -- --no-greeter</code> para conservarlo. El instalador respalda tu configuración en <code>~/.config/hypr.bak-&lt;fecha&gt;</code>. Para ver los pasos sin cambiar nada, agregá <code>-s -- --dry-run</code>. <a href="https://github.com/Diegolede/minimo-os">Código en GitHub</a> · <a href="https://github.com/Diegolede/minimo-os/releases/tag/v1.2.3-beta">Notas de 1.2.3 beta</a></p>
   <span role="status" aria-live="polite" class="sr" id="copyStatus"></span>
 </section>
+</main>
 
 <footer class="footer">
-  <p>Creado por TRN1 (Diego Ledesma) · Licencia MIT · <a href="https://github.com/Diegolede/minimo-os">GitHub</a></p>
+  <div class="footer-row">
+    <a class="brand foot-brand" href="#top"><svg viewBox="0 0 512 512" aria-hidden="true"><circle cx="256" cy="256" r="240" fill="#0B0B0C"/><rect x="152.6" y="156" width="88" height="199" rx="44" fill="#fff"/><rect x="271.4" y="156" width="88" height="199" rx="44" fill="#fff"/></svg>Minimo OS</a>
+    <p>Creado por TRN1 (Diego Ledesma) · Licencia MIT</p>
+    <p><a href="https://github.com/Diegolede/minimo-os">GitHub</a> · <a href="https://github.com/Diegolede/minimo-os/releases">Releases</a> · 1.2.3 beta</p>
+  </div>
 </footer>
 <script src="main.js"></script>
 <script src="island.js"></script>

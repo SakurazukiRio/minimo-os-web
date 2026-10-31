@@ -77,13 +77,85 @@ const dateES = d => { const t = d.toLocaleDateString('es-AR', { weekday: 'long',
 const stage = $('.mo-stage');
 const wall = $('.mo-wall');
 
+
+/* ---------- Ojos v12 (Character.qml eyePoints): pastilla → arco, ±20.5°, G≈1.23 ---------- */
+function easeMorph(x){
+  x=Math.max(0,Math.min(1,x)); if(x<=0||x>=1) return x;
+  const x1=.4,y1=.06,x2=.18,y2=1; let t=x;
+  for(let i=0;i<6;i++){const u=1-t,fx=3*u*u*t*x1+3*u*t*t*x2+t*t*t-x;
+    const dx=3*u*u*x1+6*u*t*(x2-x1)+3*t*t*(1-x2); if(Math.abs(dx)<1e-6) break; t=Math.max(0,Math.min(1,t-fx/dx))}
+  const u=1-t; return 3*u*u*t*y1+3*u*t*t*y2+t*t*t;
+}
+function eyePathD(r, side, op, smile, squint, sleepy, gazeYaw, gazePitch, wMul, hMul, worryK){
+  wMul=wMul||1; hMul=hMul||1; worryK=worryK||0;
+  const hw=0.13*wMul*(1+0.13*squint);
+  const sAng=-28*worryK*Math.PI/180;
+  const hs0=Math.max(0,(0.57-0.07*worryK)*hMul-2*hw)/2;
+  const hh=Math.max(0.35*hw,(hs0+hw)*(1-0.28*squint)*(1+0.09*squint));
+  const rr=Math.min(hw,hh), hs=hh-rr, ta=hw-rr;
+  const k=easeMorph(Math.max(0,Math.min(1,smile)));
+  const wa=0.095*wMul, R=0.14, cc=-0.04, N=20, loc=[];
+  const pillAt=t=>{const q=Math.PI/2*rr,L=2*ta+2*q+2*hs; let d=t*L;
+    if(d<ta) return [d,hh]; d-=ta;
+    if(d<q){const a=d/rr; return [ta+rr*Math.sin(a),hs+rr*Math.cos(a)]} d-=q;
+    if(d<2*hs) return [hw,hs-d]; d-=2*hs;
+    if(d<q){const a=d/rr; return [ta+rr*Math.cos(a),-hs-rr*Math.sin(a)]} d-=q;
+    return [Math.max(0,ta-d),-hh]};
+  const archAt=t=>{const Ro=R+wa,Ri=Math.max(0.005,R-wa);
+    const L1=Ro*Math.PI/2,L2=Math.PI*wa,L3=Ri*Math.PI/2,d=t*(L1+L2+L3);
+    if(d<L1){const th=d/Ro; return [Ro*Math.sin(th),cc+Ro*Math.cos(th)]}
+    if(d<L1+L2){const ph=(d-L1)/wa; return [R+wa*Math.cos(ph),cc-wa*Math.sin(ph)]}
+    const th=Math.PI/2-(d-L1-L2)/Ri; return [Ri*Math.sin(th),cc+Ri*Math.cos(th)]};
+  const cs=Math.cos(sAng),sn=Math.sin(sAng), half=[];
+  for(let i=0;i<=N;i++){const t=i/N,P=pillAt(t),A=archAt(t); half.push([P[0]+(A[0]-P[0])*k,P[1]+(A[1]-P[1])*k])}
+  for(let i=0;i<=N;i++) loc.push(half[i]);
+  for(let i=N-1;i>0;i--) loc.push([-half[i][0],half[i][1]]);
+  if(sAng) for(const q of loc){const x=q[0],y=q[1]; q[0]=x*cs+y*sn; q[1]=-x*sn+y*cs}
+  let y0=1e9,y1=-1e9; for(const q of loc){y0=Math.min(y0,q[1]); y1=Math.max(y1,q[1])}
+  const Hh=Math.max(1e-6,y1-y0), ya=y0+0.4*Hh;
+  let lid=Math.max(Math.max(0,Math.min(1,op)), Math.min(1,0.42*2*hw/Hh));
+  const sk=Math.max(0,Math.min(1,sleepy));
+  if(sk>0){
+    for(const q of loc) q[1]=ya+(q[1]-ya)*lid;
+    const wl=0.042*wMul, Rl=0.17, cl=0.10, Ro=Rl+wl, Ri=Rl-wl, A0=0.62;
+    const L1=Ro*2*A0, L2=Math.PI*wl, L3=Ri*2*A0, Lt=L1/2+L2+L3/2;
+    const arcAt=t=>{const d=t*Lt;
+      if(d<L1/2){const th=d/Ro; return [Ro*Math.sin(th),cl-Ro*Math.cos(th)]}
+      if(d<L1/2+L2){const ex=Rl*Math.sin(A0),ey=cl-Rl*Math.cos(A0),ang=A0-Math.PI/2+(d-L1/2)/wl; return [ex+wl*Math.cos(ang),ey+wl*Math.sin(ang)]}
+      const th=Math.max(0,A0-(d-L1/2-L2)/Ri); return [Ri*Math.sin(th),cl-Ri*Math.cos(th)]};
+    const n=loc.length, e=sk*sk*(3-2*sk);
+    for(let i=0;i<n;i++){let A; if(i<=N) A=arcAt(1-i/N); else {const B=arcAt((i-N)/N); A=[-B[0],B[1]]}
+      loc[i][0]+=(A[0]-loc[i][0])*e; loc[i][1]+=(A[1]-loc[i][1])*e}
+    lid=1;
+  }
+  lid*=1-0.35*Math.sin(Math.PI*k);
+  const wx=1+0.1*(1-lid);
+  const G=1+0.23*(1-Math.max(0,Math.min(1,squint)));
+  for(const q of loc){q[1]=(ya+(q[1]-ya)*lid)*G; q[0]*=wx*G}
+  const Mx=side*0.3502, Mz=0.9367, Cx=side*0.9367, Cz=-0.3502;
+  const cyw=Math.cos(gazeYaw), syw=Math.sin(gazeYaw), cp=Math.cos(gazePitch), sp=Math.sin(gazePitch);
+  const pts=[];
+  for(let j=0;j<=loc.length;j++){
+    const u=loc[j%loc.length][0], v=loc[j%loc.length][1];
+    const l=Math.hypot(u,v), sc=l>1e-9?Math.sin(l)/l:1, co=Math.cos(l);
+    let X=co*Mx+sc*u*Cx, Y=sc*v, Z=co*Mz+sc*u*Cz;
+    const Y1=Y*cp-Z*sp, Z1=Y*sp+Z*cp;
+    let X2=X*cyw+Z1*syw, Y2=Y1, Z2=-X*syw+Z1*cyw;
+    if(Z2<0){const h=Math.hypot(X2,Y2)||1; X2/=h; Y2/=h}
+    pts.push([r+X2*r, r-Y2*r]);
+  }
+  let d=`M${pts[0][0].toFixed(2)} ${pts[0][1].toFixed(2)}`;
+  for(let i=1;i<pts.length;i++) d+=`L${pts[i][0].toFixed(2)} ${pts[i][1].toFixed(2)}`;
+  return d+'Z';
+}
+
 /* ---------- Personaje (Character.qml + Reactions.qml) ---------- */
 class Character {
   constructor(el, size, opts = {}) {
     this.el = el; this.s = size; this.r = size / 2; this.clickable = !!opts.clickable; this.host = opts.host || null; this.card = !!opts.card; this.inView = !this.card; this.forceSleep = false; this.forceDance = false;
     el.classList.add('mo-chr'); el.style.width = el.style.height = size + 'px';
-    el.innerHTML = '<div class="mo-body"><div class="mo-sph"></div><div class="mo-face"><div class="mo-roll"><div class="mo-eye"><i></i></div><div class="mo-eye"><i></i></div></div></div></div>';
-    this.body = el.firstChild; this.rollEl = $('.mo-roll', el); this.eyes = [...el.querySelectorAll('.mo-eye')];
+    el.innerHTML = `<div class="mo-body"><div class="mo-sph"></div><div class="mo-face"><div class="mo-roll"><svg class="mo-eyes" viewBox="0 0 ${size} ${size}" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path class="mo-eyeL"/><path class="mo-eyeR"/></svg></div></div></div>`;
+    this.body = el.firstChild; this.rollEl = $('.mo-roll', el); this.eyeL = $('.mo-eyeL', el); this.eyeR = $('.mo-eyeR', el); this.happyK = 0;
     Object.assign(this, { active: false, lookX: 0, lookY: 0, idleX: 0, idleY: 0, eyeX: 0, eyeY: 0, vX: 0, vY: 0, gX: 0, gY: 0, gOn: 0,
       blink: 1, doubleBlink: false, sleepy: 0, petting: false, petSide: 1, petK: 0, petLean: 6, petPuff: 1, petHopY: 0,
       roll: 0, bounceY: 0, squashX: 1, squashY: 1, breath: 1, rScale: 1, rX: 0, rY: 0, rRot: 0, lookOverride: 0, oX: 0, oY: 0,
@@ -216,25 +288,17 @@ class Character {
     c.rollEl.style.transform = `rotate(${c.roll}deg)`;
     const lo = c.lookOverride;
     const bX = c.eyeX * (1 - lo) + c.oX * lo + c.wobble * Math.cos(c.wobblePh), bY = c.eyeY * (1 - lo) + c.oY * lo + c.wobble * Math.sin(c.wobblePh);
-    const fX = bX * (1 - c.gOn) + c.gX * c.gOn, fY = bY * (1 - c.gOn) + c.gY * c.gOn + .3 * c.squint;
-    const eyeW = s * .149, eyeH = s * .3375, eyeSep = s * .149;
+    const fX = bX * (1 - c.gOn) + c.gX * c.gOn, fY = bY * (1 - c.gOn) + c.gY * c.gOn + .3 * c.squint + .18 * c.sleepy;
     const L = Math.hypot(fX, fY), gk = L > 1 ? 1 / L : 1;
-    const yaw = fX * gk * .8, pitch = fY * gk * (fY > 0 ? .66 : .6), eyeAng = Math.asin(Math.min(.9, eyeSep / r));
-    const sinP = Math.sin(pitch), cosP = Math.cos(pitch), tilt = Math.max(-30, Math.min(30, 120 * Math.sin(yaw) * sinP));
+    const yaw = fX * gk * .5, pitch = fY * gk * .42; // gazeYaw/Pitch como Character.qml v12
     const openness = (1 - .8 * c.squint) * c.blink * c.half * (1 - .9 * c.sleepy) * (1 - .4 * c.tired) * (1 - .62 * c.petK);
     const joy = Math.max(c.smile, .45 * c.danceOn, .8 * c.petK) * (1 - c.sleepy);
-    [-1, 1].forEach((m, k) => {
-      const yw = yaw + m * eyeAng, cosY = Math.cos(yw), px = r * Math.sin(yw) * cosP, py = r * sinP, t = tilt * Math.PI / 180;
-      const fcx = r * Math.sin(yaw) * cosP, dx = px - fcx, cx = r + fcx + dx * Math.cos(t), cy = r + py + dx * Math.sin(t);
-      const kB = Math.max(.12, cosY), kA = Math.max(.2, cosP), own = m < 0 ? c.openL : c.openR;
-      const w = eyeW * kB * c.eyeWMul * (1 - .12 * c.worry) * (1 + .15 * c.squint);
-      const hh = Math.max(w * .35, eyeH * kA * c.eyeHMul * openness * own * (1 - .25 * c.worry) * (1 - .28 * joy));
-      const e = c.eyes[k], p = e.firstChild;
-      e.style.opacity = cosY > 0 ? 1 : 0;
-      e.style.transform = `translate(${cx}px,${cy}px) rotate(${tilt - m * 14 * c.worry}deg)`;
-      p.style.width = w + 'px'; p.style.height = hh + 'px'; p.style.borderRadius = Math.min(w, hh) / 2 + 'px';
-      p.style.left = -w / 2 + 'px'; p.style.top = (-hh / 2 - eyeH * .12 * joy) + 'px';
-    });
+    // happyK discreto (joy > .5) con lerp suave ≈ Behavior 320 ms
+    const happyT = joy > .5 ? 1 : 0; c.happyK += (happyT - c.happyK) * Math.min(1, .12);
+    const smileK = easeMorph(c.happyK);
+    const sq = 1 - .28 * c.squint;
+    c.eyeL.setAttribute('d', eyePathD(r, -1, openness * c.openL, smileK, c.squint, c.sleepy, yaw, pitch, c.eyeWMul, c.eyeHMul * sq, c.worry));
+    c.eyeR.setAttribute('d', eyePathD(r,  1, openness * c.openR, smileK, c.squint, c.sleepy, yaw, pitch, c.eyeWMul, c.eyeHMul * sq, c.worry));
   }
 }
 
@@ -363,8 +427,9 @@ pill.innerHTML = `
     <div class="mo-r2">${icon('folder', 'dark', 18)}<span class="l">Disco</span><span class="v">13% · 188,8 GB libres</span></div><div class="mo-bar"><div><i style="width:13%"></i></div></div>
     <div class="mo-r2">${icon('display', 'dark', 18)}<span class="l">Gráficos</span><span class="v mo-gpu"></span></div>
   </div>
-  <div class="mo-seg" role="radiogroup" aria-label="Modo de energía"><button role="radio" aria-checked="false">Ahorro</button><button role="radio" aria-checked="true" class="on">Equilibrado</button><button role="radio" aria-checked="false">Rendimiento</button></div>
-  <button class="mo-free" type="button">Liberar memoria</button>
+  <div class="mo-seg" role="radiogroup" aria-label="Modo de energía" data-profile="balanced"><button type="button" role="radio" data-p="power-saver" aria-checked="false">Ahorro</button><button type="button" role="radio" data-p="balanced" aria-checked="true" class="on">Equilibrado</button><button type="button" role="radio" data-p="performance" aria-checked="false">Rendimiento</button></div>
+  <div class="mo-pp"><span class="mo-pp-desc">Más batería o más rendimiento</span><button type="button" class="mo-undo" hidden>Deshacer</button></div>
+  <button class="mo-free" type="button"><span class="mo-free-lbl">Liberar memoria</span></button>
   <div class="mo-tt p">Dispositivos</div>
   <div class="mo-card">
     <div class="mo-r2">${icon('keyboard', 'dark', 18)}<span class="l">Teclado</span><span class="v">Teclado inalámbrico</span></div>
@@ -428,6 +493,7 @@ const btns = [
   mkBtn($('.mo-a1'), { icon: 'record', iconName: () => S.recording ? 'stop' : 'record', label: 'Grabar', labelFn: () => S.recording ? 'Detener' : 'Grabar', active: () => S.recording,
     run: () => { S.recording ? recStop() : recStart(400); done() } }),
   mkBtn($('.mo-a1'), { icon: 'capture', label: 'Captura', run: done }),
+  mkBtn($('.mo-a1'), { icon: 'display', label: 'Monitor off', run: () => { sleepNow(); done() } }),
   mkBtn($('.mo-a1'), { icon: 'desktops', label: 'Escritorios', run: () => { renderDesks(); setPage('desks') } }),
   mkBtn($('.mo-a2'), { icon: 'logout', label: 'Cerrar sesión', confirm: true, run: done }),
   mkBtn($('.mo-a2'), { icon: 'restart', label: 'Reiniciar', confirm: true, run: done }),
@@ -573,6 +639,41 @@ function drawStatus() { const mp = Math.round(res_.mem / 31.2 * 100);
   els.mem.textContent = res_.mem.toFixed(1).replace('.', ',') + ' / 31,2 GB'; $('.mo-memn').textContent = mp + '%'; els.memb.style.strokeDashoffset = 100 - mp; els.gpu.textContent = res_.gpu + '% · ' + res_.gt + ' °C' }
 setInterval(() => { if (!(I.panel && I.kind === 'status')) return; res_.cpu = Math.max(2, Math.min(40, res_.cpu + Math.round((Math.random() - .5) * 8))); res_.temp = 29 + Math.round(res_.cpu / 8);
   res_.mem = Math.max(1.5, Math.min(2.9, res_.mem + (Math.random() - .5) * .2)); res_.gpu = Math.max(1, Math.min(30, res_.gpu + Math.round((Math.random() - .5) * 6))); drawStatus() }, 2000);
+
+/* Recursos v5: modo de energía con Deshacer + Liberar memoria (confirmación) */
+const SEG_DESC = { 'power-saver': 'Más batería, menos rendimiento', balanced: 'Equilibrio entre batería y rendimiento', performance: 'Más rendimiento, menos batería' };
+const pp = { profile: 'balanced', prev: '', applied: '', t: 0 };
+const segEl = $('.mo-seg'), undoEl = $('.mo-undo'), ppDesc = $('.mo-pp-desc'), freeEl = $('.mo-free'), freeLbl = $('.mo-free-lbl');
+const freeSt = { armed: false, busy: false, done: false, t: 0 };
+function syncSeg() {
+  [...segEl.querySelectorAll('button')].forEach(b => { const on = b.dataset.p === pp.profile; b.classList.toggle('on', on); b.setAttribute('aria-checked', on ? 'true' : 'false') });
+  ppDesc.textContent = pp.applied ? (pp.profile === 'power-saver' ? 'Ahorro activado' : pp.profile === 'performance' ? 'Rendimiento activado' : 'Equilibrado activado') : (SEG_DESC[pp.profile] || '');
+  undoEl.hidden = !(pp.applied && pp.prev);
+}
+segEl.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b || !b.dataset.p) return; e.stopPropagation();
+  if (b.dataset.p === pp.profile) return;
+  pp.prev = pp.profile; pp.profile = b.dataset.p; pp.applied = pp.profile; clearTimeout(pp.t);
+  pp.t = setTimeout(() => { pp.applied = ''; syncSeg() }, 4000); syncSeg();
+});
+undoEl.addEventListener('click', e => { e.stopPropagation(); if (!pp.prev) return; const back = pp.prev; pp.prev = ''; pp.applied = ''; pp.profile = back; clearTimeout(pp.t); syncSeg() });
+function syncFree() {
+  freeEl.classList.toggle('armed', freeSt.armed); freeEl.classList.toggle('busy', freeSt.busy); freeEl.classList.toggle('done', freeSt.done);
+  freeLbl.textContent = freeSt.armed ? 'Confirmar' : freeSt.busy ? 'Liberando…' : freeSt.done ? 'Listo' : 'Liberar memoria';
+}
+freeEl.addEventListener('click', e => {
+  e.stopPropagation();
+  if (freeSt.busy) return;
+  if (!freeSt.armed) { freeSt.armed = true; freeSt.done = false; syncFree(); clearTimeout(freeSt.t); freeSt.t = setTimeout(() => { freeSt.armed = false; syncFree() }, 3000); return }
+  freeSt.armed = false; freeSt.busy = true; syncFree(); clearTimeout(freeSt.t);
+  const before = res_.mem;
+  setTimeout(() => {
+    res_.mem = Math.max(1.2, +(before * 0.72).toFixed(2)); drawStatus();
+    freeSt.busy = false; freeSt.done = true; syncFree();
+    freeSt.t = setTimeout(() => { freeSt.done = false; syncFree() }, 2500);
+  }, 900);
+});
+syncSeg(); syncFree();
 drawStatus();
 function drawMenu() { const d = new Date(); els.time2.textContent = hhmm(d); els.date.textContent = dateES(d) }
 setInterval(() => { if (S.player && S.player.playing) { S.player.pos++; if (S.player.pos >= S.player.len) S.player.pos = 0 } if (S.recording) {} }, 1000);
