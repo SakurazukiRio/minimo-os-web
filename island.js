@@ -414,27 +414,45 @@ pill.innerHTML = `
     <div class="mo-rv" data-step="4"><div class="mo-acts"><div class="mo-a1"></div><div class="mo-a2"></div></div></div>
   </div></div>
   <div class="mo-page mo-p-desks" style="opacity:0;transform:translateX(120px);pointer-events:none">
-    <div class="mo-desk-h"><span class="mo-back" data-int>${icon('back', 'dark', 18)}</span>Escritorios</div>
+    <div class="mo-desk-h"><span class="mo-back" data-int data-back="menu">${icon('back', 'dark', 18)}</span>Escritorios</div>
     <div class="mo-grid"></div><div class="mo-cap">Arrastrá un escritorio para reordenarlo</div>
+  </div>
+  <div class="mo-page mo-p-cal" style="opacity:0;transform:translateX(120px);pointer-events:none">
+    <div class="mo-cal">
+      <div class="mo-cal-h"><span class="mo-back" data-int data-back="menu">${icon('back', 'dark', 18)}</span><span class="mo-cal-title"></span>
+        <div class="mo-cal-nav"><button type="button" data-int data-cal="-1" aria-label="Mes anterior">‹</button><button type="button" data-int data-cal="1" aria-label="Mes siguiente">›</button></div>
+      </div>
+      <div class="mo-cal-dow"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+      <div class="mo-cal-grid"></div>
+    </div>
+  </div>
+  <div class="mo-page mo-p-notes" style="opacity:0;transform:translateX(120px);pointer-events:none">
+    <div class="mo-desk-h"><span class="mo-back" data-int data-back="menu">${icon('back', 'dark', 18)}</span>Notas</div>
+    <div class="mo-notes">
+      <div class="mo-note"><b>Ideas para 1.2.4</b>Pulir el panel de recursos y el modo Ahorro.<span>Hoy</span></div>
+      <div class="mo-note"><b>Lista de la compra</b>Café, leche de avena, pan.<span>Ayer</span></div>
+      <div class="mo-note"><b>Atajos Hyprland</b>Super+Q cierra; Super+Return abre terminal.<span>Mar</span></div>
+    </div>
   </div>
 </div>
 <div class="mo-view mo-panel mo-status off">
   <div class="mo-ph"><div class="mo-s-chr"></div></div>
   <div class="mo-tt">Internet</div>
-  <div class="mo-card"><div class="mo-r2">${icon('ethernet', 'dark', 18)}<span class="l">Ethernet</span><span class="v">Conectado</span></div></div>
-  <div class="mo-rings"><div class="mo-ring"><svg viewBox="0 0 64 64"><circle class="t" cx="32" cy="32" r="28"/><circle class="f mo-cpub" cx="32" cy="32" r="28" pathLength="100"/></svg><span class="n mo-cpun"></span><span class="rl">CPU</span><span class="rv mo-cpu"></span></div><div class="mo-ring"><svg viewBox="0 0 64 64"><circle class="t" cx="32" cy="32" r="28"/><circle class="f mo-memb" cx="32" cy="32" r="28" pathLength="100"/></svg><span class="n mo-memn"></span><span class="rl">Memoria</span><span class="rv mo-mem"></span></div></div>
-  <div class="mo-card">
-    <div class="mo-r2">${icon('folder', 'dark', 18)}<span class="l">Disco</span><span class="v">13% · 188,8 GB libres</span></div><div class="mo-bar"><div><i style="width:13%"></i></div></div>
-    <div class="mo-r2">${icon('display', 'dark', 18)}<span class="l">Gráficos</span><span class="v mo-gpu"></span></div>
+  <div class="mo-card"><div class="mo-r2">${icon('wifi', 'dark', 18)}<span class="l">Casa Lede</span><span class="v">Buena · 74%</span></div></div>
+  <div class="mo-res-card">
+    <div class="mo-rings"><div class="mo-ring" data-ring="cpu" title="Más uso ahora"><svg viewBox="0 0 88 88"><circle class="t" cx="44" cy="44" r="38"/><circle class="f mo-cpub" cx="44" cy="44" r="38" pathLength="100"/></svg><span class="n mo-cpun"></span><span class="rl">CPU</span><span class="rv mo-cpu"></span></div><div class="mo-ring" data-ring="mem" title="Más memoria"><svg viewBox="0 0 88 88"><circle class="t" cx="44" cy="44" r="38"/><circle class="f mo-memb" cx="44" cy="44" r="38" pathLength="100"/></svg><span class="n mo-memn"></span><span class="rl">Memoria</span><span class="rv mo-mem"></span></div></div>
+    <div class="mo-r2">${icon('folder', 'dark', 18)}<span class="l">Disco</span><span class="v">188,8 GB libres</span></div><div class="mo-bar"><div><i style="width:39%"></i></div></div>
+    <div class="mo-r2">${icon('battery', 'dark', 18)}<span class="l">Batería</span><span class="v">78%</span></div>
+    <div class="mo-r2">${icon('display', 'dark', 18)}<span class="l">GPU</span><span class="v mo-gpu"></span></div>
+    <div class="mo-seg" role="radiogroup" aria-label="Modo de energía" data-profile="balanced"><button type="button" role="radio" data-p="power-saver" aria-checked="false">Ahorro</button><button type="button" role="radio" data-p="balanced" aria-checked="true" class="on">Equilibrado</button><button type="button" role="radio" data-p="performance" aria-checked="false">Rendimiento</button></div>
+    <div class="mo-pp"><span class="mo-pp-desc"></span><button type="button" class="mo-undo" hidden>Deshacer</button></div>
+    <button class="mo-free" type="button"><span class="mo-free-lbl">Liberar memoria</span></button>
   </div>
-  <div class="mo-seg" role="radiogroup" aria-label="Modo de energía" data-profile="balanced"><button type="button" role="radio" data-p="power-saver" aria-checked="false">Ahorro</button><button type="button" role="radio" data-p="balanced" aria-checked="true" class="on">Equilibrado</button><button type="button" role="radio" data-p="performance" aria-checked="false">Rendimiento</button></div>
-  <div class="mo-pp"><span class="mo-pp-desc">Más batería o más rendimiento</span><button type="button" class="mo-undo" hidden>Deshacer</button></div>
-  <button class="mo-free" type="button"><span class="mo-free-lbl">Liberar memoria</span></button>
   <div class="mo-tt p">Dispositivos</div>
   <div class="mo-card">
-    <div class="mo-r2">${icon('keyboard', 'dark', 18)}<span class="l">Teclado</span><span class="v">Teclado inalámbrico</span></div>
-    <div class="mo-r2">${icon('mouse', 'dark', 18)}<span class="l">Mouse</span><span class="v">Mouse inalámbrico</span></div>
-    <div class="mo-r2">${icon('volume', 'dark', 18)}<span class="l">Audio</span><span class="v">Parlantes USB</span></div>
+    <div class="mo-r2">${icon('keyboard', 'dark', 18)}<span class="l">Teclado</span><span class="v">Keychron K2</span></div>
+    <div class="mo-r2">${icon('mouse', 'dark', 18)}<span class="l">Mouse</span><span class="v">Logitech G305</span></div>
+    <div class="mo-r2">${icon('volume', 'dark', 18)}<span class="l">Audio</span><span class="v">Auriculares USB</span></div>
   </div>
 </div>
 <div class="mo-view mo-panel mo-apps off">
@@ -489,12 +507,17 @@ function mkBtn(parent, o) {
 }
 const done = () => collapse();
 const btns = [
+  /* PinnedSection defaults: terminal,record,capture,desktops,notes,browser,files,screenoff (4 cols) */
   mkBtn($('.mo-a1'), { icon: 'terminal', label: 'Terminal', run: done }),
   mkBtn($('.mo-a1'), { icon: 'record', iconName: () => S.recording ? 'stop' : 'record', label: 'Grabar', labelFn: () => S.recording ? 'Detener' : 'Grabar', active: () => S.recording,
     run: () => { S.recording ? recStop() : recStart(400); done() } }),
   mkBtn($('.mo-a1'), { icon: 'capture', label: 'Captura', run: done }),
-  mkBtn($('.mo-a1'), { icon: 'display', label: 'Monitor off', run: () => { sleepNow(); done() } }),
   mkBtn($('.mo-a1'), { icon: 'desktops', label: 'Escritorios', run: () => { renderDesks(); setPage('desks') } }),
+  mkBtn($('.mo-a1'), { icon: 'note', label: 'Notas', run: () => setPage('notes') }),
+  mkBtn($('.mo-a1'), { icon: 'globe', label: 'Navegador', run: done }),
+  mkBtn($('.mo-a1'), { icon: 'folder', label: 'Archivos', run: done }),
+  mkBtn($('.mo-a1'), { icon: 'display', label: 'Monitor off', run: () => { sleepNow(); done() } }),
+  /* ActionsSection: logout / reboot / poweroff / settings */
   mkBtn($('.mo-a2'), { icon: 'logout', label: 'Cerrar sesión', confirm: true, run: done }),
   mkBtn($('.mo-a2'), { icon: 'restart', label: 'Reiniciar', confirm: true, run: done }),
   mkBtn($('.mo-a2'), { icon: 'power', label: 'Apagar', confirm: true, run: done }),
@@ -503,19 +526,52 @@ const btns = [
 btns.forEach(b => b.sync());
 
 /* Escritorios (WorkspacesView.qml) */
-const pMenu = $('.mo-p-menu'), pDesks = $('.mo-p-desks'); let page = 'menu';
-function setPage(p) { page = p;
-  pMenu.style.transform = p === 'menu' ? 'none' : 'translateX(-120px)'; pMenu.style.opacity = p === 'menu' ? 1 : 0; pMenu.style.pointerEvents = p === 'menu' ? '' : 'none';
-  pDesks.style.transform = p === 'desks' ? 'none' : 'translateX(120px)'; pDesks.style.opacity = p === 'desks' ? 1 : 0; pDesks.style.pointerEvents = p === 'desks' ? '' : 'none' }
+const pMenu = $('.mo-p-menu'), pDesks = $('.mo-p-desks'), pCal = $('.mo-p-cal'), pNotes = $('.mo-p-notes');
+const pages = { menu: pMenu, desks: pDesks, cal: pCal, notes: pNotes }; let page = 'menu';
+function setPage(p) {
+  page = p;
+  Object.entries(pages).forEach(([k, el]) => {
+    const on = k === p;
+    const goLeft = k === 'menu';
+    el.style.transform = on ? 'none' : (goLeft ? 'translateX(-120px)' : 'translateX(120px)');
+    el.style.opacity = on ? 1 : 0; el.style.pointerEvents = on ? '' : 'none';
+  });
+  if (p === 'cal') renderCal();
+}
 function renderDesks() {
   const g = $('.mo-grid'); g.innerHTML = '';
   S.ws.forEach(id => { const t = h('div', 'mo-tile' + (id === S.wsActive ? ' a' : ''), String(id)); t.dataset.int = ''; t.onclick = e => { e.stopPropagation(); goWs(id); done() }; g.appendChild(t) });
   const p = h('div', 'mo-tile plus', icon('plus', 'gray', 22)); p.dataset.int = ''; p.onclick = e => { e.stopPropagation(); S.ws.push(S.ws.length + 1); goWs(S.ws.length); done() }; g.appendChild(p);
 }
-$('.mo-back').addEventListener('click', e => { e.stopPropagation(); setPage('menu') });
+let calCursor = new Date();
+function renderCal() {
+  const title = $('.mo-cal-title'), grid = $('.mo-cal-grid');
+  const y = calCursor.getFullYear(), m = calCursor.getMonth();
+  const months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  title.textContent = months[m].charAt(0).toUpperCase() + months[m].slice(1) + ' ' + y;
+  const first = new Date(y, m, 1); let start = (first.getDay() + 6) % 7; // L=0
+  const days = new Date(y, m + 1, 0).getDate();
+  const prevDays = new Date(y, m, 0).getDate();
+  const today = new Date(); grid.innerHTML = '';
+  for (let i = 0; i < 42; i++) {
+    let d, mut = false, mon = m, yr = y;
+    if (i < start) { d = prevDays - start + i + 1; mut = true; mon = m - 1; if (mon < 0) { mon = 11; yr-- } }
+    else if (i >= start + days) { d = i - start - days + 1; mut = true; mon = m + 1; if (mon > 11) { mon = 0; yr++ } }
+    else d = i - start + 1;
+    const tod = !mut && d === today.getDate() && m === today.getMonth() && y === today.getFullYear();
+    const b = h('button', (mut ? 'mut' : '') + (tod ? ' tod' : ''), String(d)); b.type = 'button'; b.dataset.int = '';
+    grid.appendChild(b);
+  }
+}
+V_.menu.querySelectorAll('.mo-back').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); setPage('menu') }));
+V_.menu.querySelectorAll('[data-cal]').forEach(b => b.addEventListener('click', e => {
+  e.stopPropagation(); calCursor = new Date(calCursor.getFullYear(), calCursor.getMonth() + +b.dataset.cal, 1); renderCal();
+}));
+const dateEl = $('.mo-date'); dateEl.style.cursor = 'pointer';
+dateEl.addEventListener('click', e => { e.stopPropagation(); setPage('cal') });
 
 /* Búsqueda (SearchSection.qml) */
-const APPS = [['Terminal', 'terminal'], ['Archivos', 'folder'], ['Ajustes', 'settings'], ['Navegador', 'external'], ['Música', 'music'], ['Captura de pantalla', 'capture'], ['Notas', 'brush'], ['Monitor del sistema', 'chip']];
+const APPS = [['Terminal', 'terminal'], ['Archivos', 'folder'], ['Ajustes', 'settings'], ['Navegador', 'globe'], ['Música', 'music'], ['Captura de pantalla', 'capture'], ['Notas', 'note'], ['Monitor del sistema', 'chip']];
 const input = $('.mo-box input'), box = $('.mo-box'), results = $('.mo-results'); let sel = 0, res = [];
 function search() { const q = input.value.trim().toLowerCase(); res = q ? APPS.filter(a => a[0].toLowerCase().includes(q)).slice(0, 5) : []; sel = 0; drawRes() }
 function drawRes() { results.innerHTML = ''; res.forEach((a, i) => { const r = h('div', 'mo-res' + (i === sel ? ' sel' : ''), `${icon(a[1], 'dark', 24)}<span>${a[0]}</span>`);
@@ -550,7 +606,7 @@ function renderApps() {
 }
 
 /* ---------- Isla (Island.qml) ---------- */
-const I = { expanded: false, panel: false, kind: 'status', w: 112, h: 36, dragging: false, dragDx: 0 };
+const I = { expanded: false, panel: false, kind: 'status', w: 96, h: 36, dragging: false, dragDx: 0 };
 const setW = beh(I, 'w', 360, 'OutBack', .9), setH = beh(I, 'h', 400, 'OutBack', .7);
 let stageN = 0, staggerT = null;
 const open = () => I.expanded || I.panel;
@@ -635,19 +691,24 @@ const els = { time: $('.mo-time'), rec: $('.mo-rec'), el: $('.mo-el'), notice: $
   cv: $('.mo-art .cv'), play: $('.mo-ctrls [data-m=play] img'), cpu: $('.mo-cpu'), cpub: $('.mo-cpub'), mem: $('.mo-mem'), memb: $('.mo-memb'), gpu: $('.mo-gpu') };
 let res_ = { cpu: 5, temp: 30, mem: 1.6, gpu: 6, gt: 35 };
 function drawStatus() { const mp = Math.round(res_.mem / 31.2 * 100);
-  els.cpu.textContent = res_.temp + ' °C'; $('.mo-cpun').textContent = res_.cpu + '%'; els.cpub.style.strokeDashoffset = 100 - res_.cpu; els.cpub.classList.toggle('hot', res_.cpu > 90);
-  els.mem.textContent = res_.mem.toFixed(1).replace('.', ',') + ' / 31,2 GB'; $('.mo-memn').textContent = mp + '%'; els.memb.style.strokeDashoffset = 100 - mp; els.gpu.textContent = res_.gpu + '% · ' + res_.gt + ' °C' }
+  els.cpu.textContent = res_.temp + ' °C';
+  const cn = $('.mo-cpun'); cn.innerHTML = res_.cpu + '<small>%</small>';
+  els.cpub.style.strokeDashoffset = 100 - res_.cpu; els.cpub.classList.toggle('hot', res_.cpu > 90);
+  els.mem.textContent = res_.mem.toFixed(1).replace('.', ',') + ' GB';
+  const mn = $('.mo-memn'); mn.innerHTML = mp + '<small>%</small>';
+  els.memb.style.strokeDashoffset = 100 - mp; els.gpu.textContent = res_.gpu + '% · ' + res_.gt + ' °C' }
 setInterval(() => { if (!(I.panel && I.kind === 'status')) return; res_.cpu = Math.max(2, Math.min(40, res_.cpu + Math.round((Math.random() - .5) * 8))); res_.temp = 29 + Math.round(res_.cpu / 8);
   res_.mem = Math.max(1.5, Math.min(2.9, res_.mem + (Math.random() - .5) * .2)); res_.gpu = Math.max(1, Math.min(30, res_.gpu + Math.round((Math.random() - .5) * 6))); drawStatus() }, 2000);
 
 /* Recursos v5: modo de energía con Deshacer + Liberar memoria (confirmación) */
-const SEG_DESC = { 'power-saver': 'Más batería, menos rendimiento', balanced: 'Equilibrio entre batería y rendimiento', performance: 'Más rendimiento, menos batería' };
+const SEG_DESC = { 'power-saver': 'Más batería, menos rendimiento', balanced: 'Equilibrio entre rendimiento y batería', performance: 'Máxima velocidad, más consumo' };
 const pp = { profile: 'balanced', prev: '', applied: '', t: 0 };
 const segEl = $('.mo-seg'), undoEl = $('.mo-undo'), ppDesc = $('.mo-pp-desc'), freeEl = $('.mo-free'), freeLbl = $('.mo-free-lbl');
 const freeSt = { armed: false, busy: false, done: false, t: 0 };
 function syncSeg() {
   [...segEl.querySelectorAll('button')].forEach(b => { const on = b.dataset.p === pp.profile; b.classList.toggle('on', on); b.setAttribute('aria-checked', on ? 'true' : 'false') });
-  ppDesc.textContent = pp.applied ? (pp.profile === 'power-saver' ? 'Ahorro activado' : pp.profile === 'performance' ? 'Rendimiento activado' : 'Equilibrado activado') : (SEG_DESC[pp.profile] || '');
+  const _lab = { 'power-saver': 'Ahorro', balanced: 'Equilibrado', performance: 'Rendimiento' };
+  ppDesc.textContent = pp.applied ? ('Modo ' + (_lab[pp.profile] || '') + ' activado') : (SEG_DESC[pp.profile] || '');
   undoEl.hidden = !(pp.applied && pp.prev);
 }
 segEl.addEventListener('click', e => {
@@ -664,7 +725,7 @@ function syncFree() {
 freeEl.addEventListener('click', e => {
   e.stopPropagation();
   if (freeSt.busy) return;
-  if (!freeSt.armed) { freeSt.armed = true; freeSt.done = false; syncFree(); clearTimeout(freeSt.t); freeSt.t = setTimeout(() => { freeSt.armed = false; syncFree() }, 3000); return }
+  if (!freeSt.armed) { freeSt.armed = true; freeSt.done = false; syncFree(); clearTimeout(freeSt.t); freeSt.t = setTimeout(() => { freeSt.armed = false; syncFree() }, 4000); return }
   freeSt.armed = false; freeSt.busy = true; syncFree(); clearTimeout(freeSt.t);
   const before = res_.mem;
   setTimeout(() => {
@@ -700,8 +761,8 @@ function frame(t) {
     // Geometría de la píldora
     const rubber = I.dragging ? I.dragDx / (1 + Math.abs(I.dragDx) / 60) : 0;
     const cw = V_.compact.offsetWidth;
-    const tw = I.expanded || I.panel ? 400 : Math.max(112, cw + 32) + Math.abs(rubber) * 1.2;
-    const th = I.expanded ? Math.min(V_.menu.firstElementChild && (page === 'desks' ? pDesks.offsetHeight : pMenu.offsetHeight) + 48, 900)
+    const tw = I.expanded || I.panel ? 400 : Math.max(96, cw + 24) + Math.abs(rubber) * 1.2;
+    const _ph = page === 'desks' ? pDesks : page === 'cal' ? pCal : page === 'notes' ? pNotes : pMenu; const th = I.expanded ? Math.min((_ph && _ph.offsetHeight) + 40, 900)
       : I.panel ? (I.kind === 'apps' ? V_.apps.offsetHeight : V_.status.offsetHeight) : 36;
     setW(tw); setH(th);
     const SW = stage.clientWidth;
